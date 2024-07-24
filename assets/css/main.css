@@ -1,0 +1,60 @@
+body {
+  font-family: "Space Mono", monospace;
+  background-color: white !important;
+  width: 1440px;
+  margin: 0 auto;
+}
+
+header {
+  width: 100%;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 70px;
+}
+
+.nav-menu {
+  list-style: none;
+  display: flex;
+  gap: 50px;
+}
+
+.nav-menu li {
+  display: inline;
+}
+
+.nav-menu a {
+  font-family: "Space Mono", monospace;
+  color: black;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+footer {
+  padding: 20px;
+  border-top: 1px solid #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-menu {
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  gap: 100px;
+}
+
+.footer-menu li {
+  display: inline;
+}
+
+.footer-menu a {
+  font-family: "Space Mono", monospace;
+  color: black;
+  text-decoration: none;
+  font-size: 16px;
+}
