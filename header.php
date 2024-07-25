@@ -10,18 +10,21 @@
         <div class="header-container">
             <div class="logo">
                 <a href="<?php echo home_url(); ?>">
-                  <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/Logo.png'; ?>" alt="Logo Nathalie Mota">
+                    <img src="<?php echo get_stylesheet_directory_uri() . '/assets/images/Logo.png'; ?>" alt="Logo Nathalie Mota">
                 </a>
             </div>
-            <nav>
-                <?php
-                wp_nav_menu(array(
-                    'theme_location' => 'primary',
-                    'menu_class' => 'nav-menu',
-                ));
-                ?>
-            </nav>
+            <div class="menu-container">
+                <div class="nav">
+                    <?php
+                    wp_nav_menu(array(
+                        'theme_location' => 'primary',
+                        'menu_class' => 'nav-menu',
+                    ));
+                    ?>
+                </div>
+                <div class="contact-btn">
+                    <p id="contactBtn">Contact</p>
+                </div>
+            </div>
         </div>
     </header>
-
-
