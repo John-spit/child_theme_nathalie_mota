@@ -1,9 +1,11 @@
 body {
   font-family: "Space Mono", monospace;
   background-color: white !important;
-  width: 1440px;
+  max-width: 1440px;
   margin: 0 auto;
 }
+
+/** Header **/
 
 header {
   max-width: 100%;
