@@ -36,11 +36,11 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
       openPopup();
 
-      // Utiliser jQuery pour préremplir le champ de référence
+      // Utilisation de jQuery pour préremplir le champ de référence
       const photoReferenceElement = document.getElementById("photoReference");
       if (photoReferenceElement) {
         const photoReference = photoReferenceElement.textContent.trim();
-        jQuery("#photo-reference").val(photoReference); // Remplir le champ de référence dans le formulaire
+        jQuery("#photo-reference").val(photoReference);
         console.log("Référence photo préremplie: " + photoReference);
       } else {
         console.error("L'élément photoReference est manquant");
@@ -70,5 +70,30 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       false
     );
+  }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const navPrevious = document.querySelector(".nav-previous");
+  const navNext = document.querySelector(".nav-next");
+
+  if (navPrevious) {
+    navPrevious.addEventListener("mouseover", function () {
+      navPrevious.querySelector(".thumbnail").style.display = "block";
+    });
+
+    navPrevious.addEventListener("mouseout", function () {
+      navPrevious.querySelector(".thumbnail").style.display = "none";
+    });
+  }
+
+  if (navNext) {
+    navNext.addEventListener("mouseover", function () {
+      navNext.querySelector(".thumbnail").style.display = "block";
+    });
+
+    navNext.addEventListener("mouseout", function () {
+      navNext.querySelector(".thumbnail").style.display = "none";
+    });
   }
 });

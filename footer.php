@@ -11,6 +11,6 @@
     </div>
 </footer>
 <?php wp_footer(); ?>
-<?php get_template_part('templates_part/popup-contact'); ?>
+<?php get_template_part('templates_parts/popup-contact'); ?>
 </body>
 </html>

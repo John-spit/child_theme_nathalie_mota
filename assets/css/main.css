@@ -1,7 +1,6 @@
 body {
   font-family: "Space Mono", monospace;
   background-color: white !important;
-  max-width: 1440px;
   margin: 0 auto;
 }
 
@@ -51,6 +50,169 @@ header {
   font-size: 16px;
   margin-left: 50px;
   cursor: pointer;
+}
+
+/* Page d'accueil */
+
+.page-containt {
+  max-width: 1148px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* Single photo page */
+
+.single-photo-page {
+  max-width: 1148px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.single-photo-container p {
+  font-size: 14px;
+}
+
+.photo-meta-container {
+  display: flex;
+  gap: 20px;
+}
+
+.photo-meta {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.photo-meta h1 {
+  font-family: "Space Mono", monospace;
+  color: black;
+  font-size: 66px;
+  line-height: 62px;
+  font-weight: 400;
+  font-style: italic;
+  text-transform: uppercase;
+}
+
+.photo-meta a {
+  text-decoration: none;
+  pointer-events: none;
+  cursor: default;
+}
+
+.separator-meta {
+  margin-top: 20px;
+}
+
+.separator {
+  width: 100%;
+  border: 0.5px solid black;
+}
+
+.photo-content {
+  width: 50%;
+}
+
+.wp-block-image {
+  margin: 0;
+}
+
+.contact-single-container {
+  display: flex;
+  justify-content: space-between;
+  height: 118px;
+}
+
+.contact-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 50%;
+}
+
+.contact-container p {
+  font-family: "Poppins";
+}
+
+.photo-meta-contactBtn {
+  width: 272px;
+  height: 50px;
+  font-size: 12px;
+  font-family: "Space Mono", monospace !important;
+  color: black !important;
+  border: none;
+  border-radius: 2px;
+  background-color: #b8bbc2 !important;
+}
+
+.photo-meta-contactBtn:hover {
+  background-color: black !important;
+  color: white !important;
+}
+
+.navigation-wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+.like-also {
+  margin-bottom: 100px;
+}
+
+.like-also p {
+  margin-top: 70px;
+  margin-bottom: 50px;
+  font-size: 18px;
+}
+
+.related-photos {
+  display: flex;
+  height: 500px;
+  gap: 20px;
+}
+
+.related-photo-item {
+  width: 50%;
+  height: 100%;
+}
+
+.related-photo-item img {
+  height: 100% !important;
+  object-fit: cover;
+}
+
+.nav-previous,
+.nav-next {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.thumbnail {
+  display: none;
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.thumbnail img {
+  max-width: 100px;
+  height: auto;
+}
+
+.nav-previous:hover .thumbnail,
+.nav-next:hover .thumbnail {
+  display: block;
 }
 
 /* Popup */
@@ -115,6 +277,7 @@ textarea {
   border-radius: 4px;
   background-color: #d8d8d8 !important;
   color: black !important;
+  border: none;
 }
 
 .popup-wrapper form .btn-form:hover {

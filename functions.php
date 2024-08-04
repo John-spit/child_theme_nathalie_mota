@@ -8,3 +8,12 @@ function nathaliemota_enqueue_scripts() {
     wp_enqueue_script('script', get_stylesheet_directory_uri() . '/assets/js/script.js', array('jquery'), '1.0', true);
 }
 add_action('wp_enqueue_scripts', 'nathaliemota_enqueue_scripts');
+
+// Custom image sizes
+function custom_image_sizes() {
+    add_image_size('single-page-photo', 563, 844, true);
+    add_image_size('miniature', 81, 71, true);
+    add_image_size('photo-thumbnail', 546, 495, true);
+    add_image_size('banner', 1440, 962, true);
+}
+add_action('after_setup_theme', 'custom_image_sizes');
