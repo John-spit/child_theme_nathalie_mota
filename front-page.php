@@ -49,6 +49,13 @@ get_header();
             }
             ?>
         </div>
+            <!-- Conteneur pour les nouvelles photos -->
+    <div id="new-photos"></div>
+
+<!-- Bouton pour charger plus -->
+<button id="load-more" data-page="1" data-max-pages="<?php echo $photo_gallery_query->max_num_pages; ?>">
+    Charger plus
+</button>
     </section>
 </div>
 

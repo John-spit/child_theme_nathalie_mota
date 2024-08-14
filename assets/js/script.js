@@ -71,9 +71,7 @@ document.addEventListener("DOMContentLoaded", function () {
       false
     );
   }
-});
 
-document.addEventListener("DOMContentLoaded", function () {
   const navPrevious = document.querySelector(".nav-previous");
   const navNext = document.querySelector(".nav-next");
 
@@ -94,6 +92,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
     navNext.addEventListener("mouseout", function () {
       navNext.querySelector(".thumbnail").style.display = "none";
+    });
+  }
+
+  // Fonctionnalité AJAX pour le bouton "Charger plus"
+  const loadMoreButton = document.getElementById("load-more");
+
+  if (loadMoreButton) {
+    loadMoreButton.addEventListener("click", function () {
+      const button = this;
+      let paged = parseInt(button.getAttribute("data-page")) + 1;
+      const maxPages = parseInt(button.getAttribute("data-max-pages"));
+
+      jQuery.ajax({
+        url: load_more_photos.ajaxurl, // Utiliser load_more_photos.ajaxurl au lieu de ajaxurl
+        type: "post",
+        data: {
+          action: "load_more_photos",
+          paged: paged,
+          nonce: load_more_photos.nonce, // Utiliser load_more_photos.nonce pour le nonce
+        },
+        beforeSend: function () {
+          button.textContent = "Chargement...";
+        },
+        success: function (response) {
+          const newPhotosContainer = document.getElementById("new-photos");
+          if (newPhotosContainer) {
+            newPhotosContainer.insertAdjacentHTML("beforeend", response);
+          }
+
+          button.setAttribute("data-page", paged);
+
+          if (paged >= maxPages) {
+            button.remove(); // Retirer le bouton si on atteint la dernière page
+          } else {
+            button.textContent = "Charger plus";
+          }
+        },
+      });
     });
   }
 });
