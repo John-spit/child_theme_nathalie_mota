@@ -44,63 +44,106 @@ while ( have_posts() ) :
 				
 				<!-- Navigation circulaire -->
 				<?php
-				$args = array(
-					'post_type'      => 'photo',
-					'posts_per_page' => -1,  
-				);
+// Récupérer le post précédent et suivant, peu importe la catégorie
+$prev_post = get_previous_post();
+$next_post = get_next_post();
 
-				$all_photos = get_posts( $args );
-				$total_photos = count( $all_photos );
-				$current_index = array_search( get_the_ID(), wp_list_pluck( $all_photos, 'ID' ) );
+// Si nous ne trouvons pas de post précédent ou suivant, bouclez au début/fin
+if ( ! $prev_post ) {
+    $prev_post = get_posts( array(
+        'post_type'      => 'photo',
+        'posts_per_page' => 1,
+        'order'          => 'DESC',
+    ) )[0];
+}
 
-				$prev_index = ( $current_index - 1 + $total_photos ) % $total_photos;
-				$next_index = ( $current_index + 1 ) % $total_photos;
+if ( ! $next_post ) {
+    $next_post = get_posts( array(
+        'post_type'      => 'photo',
+        'posts_per_page' => 1,
+        'order'          => 'ASC',
+    ) )[0];
+}
+?>
 
-				$prev_post = $all_photos[ $prev_index ];
-				$next_post = $all_photos[ $next_index ];
-				?>
+<div class="navigation-wrapper">
+    <?php if ( $prev_post ) : ?>
+        <div class="nav-previous">
+            <a href="<?php echo get_permalink( $prev_post->ID ); ?>">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/arrow-left.png" alt="Précédent">
+            </a>
+            <?php 
+            $prev_thumbnail_url = get_the_post_thumbnail_url( $prev_post->ID, 'thumbnail' );
+            if ( $prev_thumbnail_url ) : ?>
+                <div class="previous-thumbnail thumbnail">
+                    <img src="<?php echo esc_url( $prev_thumbnail_url ); ?>" alt="Photo précédente">
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
 
-				<div class="navigation-wrapper">
-					<?php if ( $prev_post ) : ?>
-						<div class="nav-previous">
-							<a href="<?php echo get_permalink( $prev_post->ID ); ?>">
-								<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/arrow-left.png" alt="Précédent">
-							</a>
-							<?php 
-							$prev_thumbnail_url = get_the_post_thumbnail_url( $prev_post->ID, 'thumbnail' );
-							if ( $prev_thumbnail_url ) : ?>
-								<div class="previous-thumbnail thumbnail">
-									<img src="<?php echo esc_url( $prev_thumbnail_url ); ?>" alt="Photo précédente">
-								</div>
-							<?php endif; ?>
-						</div>
-					<?php endif; ?>
-
-					<?php if ( $next_post ) : ?>
-						<div class="nav-next">
-							<a href="<?php echo get_permalink( $next_post->ID ); ?>">
-								<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/arrow-right.png" alt="Suivant">
-							</a>
-							<?php 
-							$next_thumbnail_url = get_the_post_thumbnail_url( $next_post->ID, 'thumbnail' );
-							if ( $next_thumbnail_url ) : ?>
-								<div class="next-thumbnail thumbnail">				
-									<img src="<?php echo esc_url( $next_thumbnail_url ); ?>" alt="Photo suivante">  
-								</div>
-							<?php endif; ?>
-						</div>
-					<?php endif; ?>
-				</div>
+    <?php if ( $next_post ) : ?>
+        <div class="nav-next">
+            <a href="<?php echo get_permalink( $next_post->ID ); ?>">
+                <img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/arrow-right.png" alt="Suivant">
+            </a>
+            <?php 
+            $next_thumbnail_url = get_the_post_thumbnail_url( $next_post->ID, 'thumbnail' );
+            if ( $next_thumbnail_url ) : ?>
+                <div class="next-thumbnail thumbnail">
+                    <img src="<?php echo esc_url( $next_thumbnail_url ); ?>" alt="Photo suivante">
+                </div>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+</div>
 			</div>
 			<div class="separator"></div>
 
 		</section>
 
 		<section class="like-also">
-			<p>VOUS AIMEREZ AUSSI</p>
-			
-			<?php get_template_part('templates_parts/photo-block'); ?>
-		</section>
+    <p>VOUS AIMEREZ AUSSI</p>
+    
+		<div class="related-photos">
+    <?php
+    // Récupérer les catégories du post en cours
+    $categories = get_the_terms( get_the_ID(), 'categorie' );
+
+    if ( $categories && ! is_wp_error( $categories ) ) {
+        $category_ids = wp_list_pluck( $categories, 'term_id' );
+
+        // Configurer la requête pour obtenir deux photos aléatoires de la même catégorie
+        $args = array(
+            'post_type' => 'photo',
+            'posts_per_page' => 2, 
+            'post__not_in' => array( get_the_ID() ),
+            'orderby' => 'rand',
+            'tax_query' => array(
+                array(
+                    'taxonomy' => 'categorie',
+                    'field'    => 'term_id',
+                    'terms'    => $category_ids,
+                ),
+            ),
+        );
+
+        $query = new WP_Query( $args );
+        if ( $query->have_posts() ) {
+            global $wp_query;
+            $wp_query_backup = $wp_query; // Sauvegarder la requête principale
+            $wp_query = $query;
+            while ( $wp_query->have_posts() ) {
+                $wp_query->the_post();
+                get_template_part('templates_parts/photo-block');  // Afficher chaque photo
+            }
+            $wp_query = $wp_query_backup; // Restaurer la requête principale
+            wp_reset_postdata();
+        }
+    }
+    ?>
+		</div>
+</section>
 	</div>
 	<?php
 

@@ -1,40 +1,9 @@
-<div class="related-photos">
-    <?php
-    $categories = get_the_terms( get_the_ID(), 'categorie' );
-    if ( $categories && ! is_wp_error( $categories ) ) {
-        $category_ids = wp_list_pluck( $categories, 'term_id' );
-        $args = array(
-            'post_type' => 'photo',
-            'posts_per_page' => 2,
-            'post__not_in' => array( get_the_ID() ),
-            'tax_query' => array(
-                array(
-                    'taxonomy' => 'categorie',
-                    'field'    => 'term_id',
-                    'terms'    => $category_ids,
-                ),
-            ),
-            'orderby' => 'rand',
-        );
-
-        $related_photos_query = new WP_Query( $args );
-        if ( $related_photos_query->have_posts() ) {
-            while ( $related_photos_query->have_posts() ) {
-                $related_photos_query->the_post();
-                ?>
-                <div class="related-photo-item">
-                    <a href="<?php the_permalink(); ?>">
-                        <?php the_post_thumbnail(); ?>
-                    </a>
-                </div>
-                <?php
-            }
-            wp_reset_postdata();
-        } else {
-            echo '<p>Pas de photos trouvées.</p>';
-        }
-    }
-    ?>
+<div class="related-photo-item">
+    <a href="<?php the_permalink(); ?>">
+        <?php the_post_thumbnail(); ?>
+    </a>
+    <div class="photo-icons">
+        <a href="<?php the_permalink(); ?>" class="icon-eye" title="Voir les informations"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/eye.png" alt="Voir les informations"></a>
+        <a href="<?php echo esc_url( get_the_post_thumbnail_url(get_the_ID(), 'full') ); ?>" class="icon-fullscreen" title="Voir en plein écran" data-lightbox="related-photos"><img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/images/fullscreen.png" alt="Voir en plein écran"></a>
+    </div>
 </div>
-
-		
