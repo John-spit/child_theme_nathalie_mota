@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const contactPopup = document.getElementById("contactPopup");
   const contactForm = contactPopup ? contactPopup.querySelector("form") : null;
 
-  // Fonction pour ouvrir la popup
   function openPopup() {
     if (contactPopup) {
       contactPopup.style.display = "flex";
@@ -12,7 +11,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Fonction pour fermer la popup
   function closePopup() {
     if (contactPopup) {
       if (contactForm) {
@@ -23,7 +21,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Événements de clic pour ouvrir la popup
   if (contactBtn) {
     contactBtn.addEventListener("click", function (e) {
       e.preventDefault();
@@ -36,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
       openPopup();
 
-      // Utilisation de jQuery pour préremplir le champ de référence
       const photoReferenceElement = document.getElementById("photoReference");
       if (photoReferenceElement) {
         const photoReference = photoReferenceElement.textContent.trim();
@@ -48,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Fermer la popup lorsque l'utilisateur clique en dehors de la popup, sauf si c'est le bouton Contact
   document.addEventListener("click", function (e) {
     if (
       contactPopup &&
@@ -61,7 +56,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Fermer la popup lorsque le formulaire est soumis avec succès
   if (contactForm) {
     document.addEventListener(
       "wpcf7mailsent",
@@ -95,41 +89,73 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Fonctionnalité AJAX pour le bouton "Charger plus"
-  const loadMoreButton = document.getElementById("load-more");
+  // Fonction pour les filtres
+  async function loadFilteredPhotos(page = 1) {
+    const category = document.getElementById("filter-category").value;
+    const format = document.getElementById("filter-format").value;
+    const sort = document.getElementById("sort-date").value;
 
-  if (loadMoreButton) {
-    loadMoreButton.addEventListener("click", function () {
-      const button = this;
-      let paged = parseInt(button.getAttribute("data-page")) + 1;
-      const maxPages = parseInt(button.getAttribute("data-max-pages"));
+    const response = await fetch(load_more_photos.ajaxurl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded; charset=UTF-8",
+      },
+      body: new URLSearchParams({
+        action: "filter_photos",
+        category: category,
+        format: format,
+        sort: sort,
+        nonce: load_more_photos.nonce,
+        paged: page,
+      }),
+    });
 
-      jQuery.ajax({
-        url: load_more_photos.ajaxurl, // Utiliser load_more_photos.ajaxurl au lieu de ajaxurl
-        type: "post",
-        data: {
-          action: "load_more_photos",
-          paged: paged,
-          nonce: load_more_photos.nonce, // Utiliser load_more_photos.nonce pour le nonce
-        },
-        beforeSend: function () {
-          button.textContent = "Chargement...";
-        },
-        success: function (response) {
-          const newPhotosContainer = document.getElementById("new-photos");
-          if (newPhotosContainer) {
-            newPhotosContainer.insertAdjacentHTML("beforeend", response);
-          }
+    const text = await response.text();
+    console.log(text); // Affiche la réponse brute
 
-          button.setAttribute("data-page", paged);
+    try {
+      const data = JSON.parse(text);
+      console.log(data); // Affiche les données JSON parsées
 
-          if (paged >= maxPages) {
-            button.remove(); // Retirer le bouton si on atteint la dernière page
-          } else {
-            button.textContent = "Charger plus";
-          }
-        },
-      });
+      const galleryElement = document.getElementById("photo-gallery");
+      if (page === 1) {
+        // Remplace le contenu uniquement si c'est la première page
+        galleryElement.innerHTML = data.html;
+      } else {
+        // Ajoute les nouvelles photos à la suite
+        galleryElement.insertAdjacentHTML("beforeend", data.html);
+      }
+
+      // Gérer la visibilité du bouton "Charger plus"
+      if (page >= data.total_pages) {
+        loadMoreBtn.style.display = "none"; // Masque le bouton si c'est la dernière page
+      } else {
+        loadMoreBtn.style.display = "block"; // Affiche le bouton sinon
+        loadMoreBtn.setAttribute("data-page", page); // Met à jour la page courante
+      }
+    } catch (e) {
+      console.error("Parsing error:", e);
+    }
+  }
+
+  const filterCategory = document.getElementById("filter-category");
+  const filterFormat = document.getElementById("filter-format");
+  const sortDate = document.getElementById("sort-date");
+
+  [filterCategory, filterFormat, sortDate].forEach((filter) => {
+    filter.addEventListener("change", function () {
+      loadMoreBtn.setAttribute("data-page", 1); // Réinitialise la page courante
+      loadFilteredPhotos(); // Charge la première page des résultats filtrés
+    });
+  });
+
+  // Charger plus de photos
+  const loadMoreBtn = document.getElementById("load-more");
+  if (loadMoreBtn) {
+    loadMoreBtn.addEventListener("click", function () {
+      const nextPage = parseInt(this.getAttribute("data-page")) + 1;
+      loadFilteredPhotos(nextPage);
+      this.setAttribute("data-page", nextPage);
     });
   }
 });

@@ -82,6 +82,22 @@ header {
   -webkit-text-stroke: 2px white;
 }
 
+#photo-filters-form {
+  display: flex;
+  justify-content: space-between;
+  max-width: 1148px;
+  margin: 0 auto;
+  font-family: "Poppins";
+  font-weight: 500;
+  font-size: 12px;
+}
+
+#photo-filters-form select {
+  width: 260px;
+  border-radius: 8px;
+  border: 1.5px solid #b8bbc2;
+}
+
 .photo-gallery {
   max-width: 1148px;
   margin: 0 auto;
