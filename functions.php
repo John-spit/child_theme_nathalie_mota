@@ -6,13 +6,13 @@ function nathaliemota_enqueue_scripts() {
     wp_enqueue_style('google-fonts', 'https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap', array(), null);
     wp_enqueue_script('jquery');
     wp_enqueue_script('script', get_stylesheet_directory_uri() . '/assets/js/script.js', array('jquery'), '1.0', true);
-
+    wp_enqueue_script('lightbox-js', get_stylesheet_directory_uri() . '/assets/js/lightbox.js', array('jquery'), null, true);
     wp_localize_script(
-        'script', // Handle du script
-        'load_more_photos', // Nom de l'objet JavaScript
+        'script',
+        'load_more_photos', 
         array(
-            'ajaxurl' => admin_url('admin-ajax.php'), // URL AJAX pour WordPress
-            'nonce'   => wp_create_nonce('load_more_photos_nonce') // Créer un nonce pour la sécurité
+            'ajaxurl' => admin_url('admin-ajax.php'), 
+            'nonce'   => wp_create_nonce('load_more_photos_nonce') 
         )
     );
 }
@@ -53,7 +53,7 @@ function load_more_photos() {
         echo '<p>Plus de photos disponibles.</p>';
     }
 
-    // Arrêtez l'exécution
+    // Arrête l'exécution
     wp_die();
 }
 

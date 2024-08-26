@@ -11,11 +11,9 @@
 
 get_header();
 
-/* Start the Loop */
 while ( have_posts() ) :
 	the_post();
 
-	// Custom code to display photo details
 	?>
 
 	<div class="single-photo-page">
@@ -44,7 +42,7 @@ while ( have_posts() ) :
 				
 				<!-- Navigation circulaire -->
 				<?php
-// Récupérer le post précédent et suivant, peu importe la catégorie
+// Récupère le post précédent et suivant, peu importe la catégorie
 $prev_post = get_previous_post();
 $next_post = get_next_post();
 
@@ -107,13 +105,13 @@ if ( ! $next_post ) {
     
 		<div class="related-photos">
     <?php
-    // Récupérer les catégories du post en cours
+    // Récupère les catégories du post en cours
     $categories = get_the_terms( get_the_ID(), 'categorie' );
 
     if ( $categories && ! is_wp_error( $categories ) ) {
         $category_ids = wp_list_pluck( $categories, 'term_id' );
 
-        // Configurer la requête pour obtenir deux photos aléatoires de la même catégorie
+        // Configure la requête pour obtenir deux photos aléatoires de la même catégorie
         $args = array(
             'post_type' => 'photo',
             'posts_per_page' => 2, 
@@ -131,13 +129,13 @@ if ( ! $next_post ) {
         $query = new WP_Query( $args );
         if ( $query->have_posts() ) {
             global $wp_query;
-            $wp_query_backup = $wp_query; // Sauvegarder la requête principale
+            $wp_query_backup = $wp_query; // Sauvegarde la requête principale
             $wp_query = $query;
             while ( $wp_query->have_posts() ) {
                 $wp_query->the_post();
-                get_template_part('templates_parts/photo-block');  // Afficher chaque photo
+                get_template_part('templates_parts/photo-block');  // Affiche chaque photo
             }
-            $wp_query = $wp_query_backup; // Restaurer la requête principale
+            $wp_query = $wp_query_backup; // Restaure la requête principale
             wp_reset_postdata();
         }
     }
@@ -147,11 +145,11 @@ if ( ! $next_post ) {
 	</div>
 	<?php
 
-	// If comments are open or there is at least one comment, load up the comment template.
+	
 	if ( comments_open() || get_comments_number() ) {
 		comments_template();
 	}
 
-endwhile; // End of the loop.
+endwhile; 
 
 get_footer();

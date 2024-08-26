@@ -71,21 +71,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (navPrevious) {
     navPrevious.addEventListener("mouseover", function () {
-      navPrevious.querySelector(".thumbnail").style.display = "block";
+      const thumbnail = navPrevious.querySelector(".thumbnail");
+      if (thumbnail) {
+        thumbnail.style.display = "block";
+      }
     });
 
     navPrevious.addEventListener("mouseout", function () {
-      navPrevious.querySelector(".thumbnail").style.display = "none";
+      const thumbnail = navPrevious.querySelector(".thumbnail");
+      if (thumbnail) {
+        thumbnail.style.display = "none";
+      }
     });
   }
 
   if (navNext) {
     navNext.addEventListener("mouseover", function () {
-      navNext.querySelector(".thumbnail").style.display = "block";
+      const thumbnail = navNext.querySelector(".thumbnail");
+      if (thumbnail) {
+        thumbnail.style.display = "block";
+      }
     });
 
     navNext.addEventListener("mouseout", function () {
-      navNext.querySelector(".thumbnail").style.display = "none";
+      const thumbnail = navNext.querySelector(".thumbnail");
+      if (thumbnail) {
+        thumbnail.style.display = "none";
+      }
     });
   }
 
@@ -118,20 +130,24 @@ document.addEventListener("DOMContentLoaded", function () {
       console.log(data); // Affiche les données JSON parsées
 
       const galleryElement = document.getElementById("photo-gallery");
-      if (page === 1) {
-        // Remplace le contenu uniquement si c'est la première page
-        galleryElement.innerHTML = data.html;
-      } else {
-        // Ajoute les nouvelles photos à la suite
-        galleryElement.insertAdjacentHTML("beforeend", data.html);
-      }
+      if (galleryElement) {
+        if (page === 1) {
+          // Remplace le contenu uniquement si c'est la première page
+          galleryElement.innerHTML = data.html;
+        } else {
+          // Ajoute les nouvelles photos à la suite
+          galleryElement.insertAdjacentHTML("beforeend", data.html);
+        }
 
-      // Gérer la visibilité du bouton "Charger plus"
-      if (page >= data.total_pages) {
-        loadMoreBtn.style.display = "none"; // Masque le bouton si c'est la dernière page
+        // Gère la visibilité du bouton "Charger plus"
+        if (page >= data.total_pages) {
+          loadMoreBtn.style.display = "none";
+        } else {
+          loadMoreBtn.style.display = "block";
+          loadMoreBtn.setAttribute("data-page", page);
+        }
       } else {
-        loadMoreBtn.style.display = "block"; // Affiche le bouton sinon
-        loadMoreBtn.setAttribute("data-page", page); // Met à jour la page courante
+        console.error("L'élément 'photo-gallery' est manquant");
       }
     } catch (e) {
       console.error("Parsing error:", e);
@@ -144,8 +160,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   [filterCategory, filterFormat, sortDate].forEach((filter) => {
     filter.addEventListener("change", function () {
-      loadMoreBtn.setAttribute("data-page", 1); // Réinitialise la page courante
-      loadFilteredPhotos(); // Charge la première page des résultats filtrés
+      loadMoreBtn.setAttribute("data-page", 1);
+      loadFilteredPhotos();
     });
   });
 
@@ -158,4 +174,11 @@ document.addEventListener("DOMContentLoaded", function () {
       this.setAttribute("data-page", nextPage);
     });
   }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+  const titles = document.querySelectorAll(".photo-title");
+  titles.forEach((title) => {
+    title.innerHTML = title.innerHTML.replace(/<br\s*\/?>/gi, " ");
+  });
 });

@@ -1,5 +1,5 @@
 <?php
-// Récupérer une image aléatoire du type de contenu personnalisé "photo"
+// Récupère une image aléatoire du type de contenu personnalisé "photo"
 $args = array(
     'post_type'      => 'photo',
     'posts_per_page' => 1, 
@@ -11,7 +11,7 @@ $random_photo_query = new WP_Query( $args );
 if ( $random_photo_query->have_posts() ) {
     $random_photo_query->the_post();
     $background_image_url = get_the_post_thumbnail_url( get_the_ID(), 'full' ); 
-    wp_reset_postdata(); // Réinitialiser les données post après la première requête
+    wp_reset_postdata(); // Réinitialise les données post après la première requête
 }
 
 get_header();
@@ -80,7 +80,7 @@ get_header();
                 get_template_part( 'templates_parts/photo-block' );
             }
 
-            // Réinitialiser les données post
+            // Réinitialise les données post
             wp_reset_postdata();
         } else {
             echo '<p>Aucune photo trouvée.</p>';
