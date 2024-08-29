@@ -51,6 +51,10 @@ header {
   gap: 50px;
 }
 
+.nav-menu .current-menu-item a {
+  font-weight: bold;
+}
+
 .nav li {
   display: flex;
 }

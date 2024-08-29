@@ -205,9 +205,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Fermer le menu burger lorsque le bouton "Contact" est cliqué
   contactBtn.addEventListener("click", function () {
-    navMenu.classList.remove("open");
-    closeMenu.style.display = "none";
-    openMenu.style.display = "block";
+    if (window.innerWidth < 790) {
+      navMenu.classList.remove("open");
+      closeMenu.style.display = "none";
+      openMenu.style.display = "block";
+    }
   });
 
   // Écouteur d'événement pour détecter les changements de taille d'écran
