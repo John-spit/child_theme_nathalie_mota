@@ -158,12 +158,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const filterFormat = document.getElementById("filter-format");
   const sortDate = document.getElementById("sort-date");
 
-  [filterCategory, filterFormat, sortDate].forEach((filter) => {
-    filter.addEventListener("change", function () {
-      loadMoreBtn.setAttribute("data-page", 1);
-      loadFilteredPhotos();
+  if (filterCategory && filterFormat && sortDate) {
+    [filterCategory, filterFormat, sortDate].forEach((filter) => {
+      filter.addEventListener("change", function () {
+        loadMoreBtn.setAttribute("data-page", 1);
+        loadFilteredPhotos();
+      });
     });
-  });
+  }
 
   // Charger plus de photos
   const loadMoreBtn = document.getElementById("load-more");
@@ -176,9 +178,56 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+const titles = document.querySelectorAll(".photo-title");
+titles.forEach((title) => {
+  title.innerHTML = title.innerHTML.replace(/<br\s*\/?>/gi, " ");
+});
+
 document.addEventListener("DOMContentLoaded", function () {
-  const titles = document.querySelectorAll(".photo-title");
-  titles.forEach((title) => {
-    title.innerHTML = title.innerHTML.replace(/<br\s*\/?>/gi, " ");
+  const openMenu = document.getElementById("openMenu");
+  const closeMenu = document.getElementById("closeMenu");
+  const navMenu = document.getElementById("navMenu");
+
+  // Cacher l'icône de fermeture au chargement de la page
+  closeMenu.style.display = "none";
+
+  openMenu.addEventListener("click", function () {
+    navMenu.classList.add("open");
+    openMenu.style.display = "none";
+    closeMenu.style.display = "block";
+  });
+
+  closeMenu.addEventListener("click", function () {
+    navMenu.classList.remove("open");
+    closeMenu.style.display = "none";
+    openMenu.style.display = "block";
+  });
+
+  // Fermer le menu burger lorsque le bouton "Contact" est cliqué
+  contactBtn.addEventListener("click", function () {
+    navMenu.classList.remove("open");
+    closeMenu.style.display = "none";
+    openMenu.style.display = "block";
+  });
+
+  // Écouteur d'événement pour détecter les changements de taille d'écran
+  window.addEventListener("resize", function () {
+    if (window.innerWidth > 790) {
+      // Masquer les icônes et réinitialiser l'état du menu si la largeur dépasse 790px
+      openMenu.style.display = "none";
+      closeMenu.style.display = "none";
+      navMenu.classList.remove("open");
+      navMenu.style.display = ""; // Réinitialise le display pour le retour à la navigation normale
+    } else {
+      if (!navMenu.classList.contains("open")) {
+        // Si le menu n'est pas ouvert, afficher l'icône d'ouverture
+        openMenu.style.display = "block";
+        closeMenu.style.display = "none";
+      } else {
+        // Si le menu est ouvert, garder l'icône de fermeture visible
+        openMenu.style.display = "none";
+        closeMenu.style.display = "block";
+      }
+    }
   });
 });

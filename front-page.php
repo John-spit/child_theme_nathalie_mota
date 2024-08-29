@@ -24,7 +24,7 @@ get_header();
 
     <section class="photo-filters">
         <form id="photo-filters-form">
-            <div>
+            <div class="photo-filters-left">
                 <select id="filter-category" name="categorie">
                     <option value="">Catégories</option>
                     <?php
@@ -51,7 +51,7 @@ get_header();
                     ?>
                 </select>
             </div>
-            <div>
+            <div class="photo-filters-right">
                 <select id="sort-date" name="sort">
                     <option value="">Trier par</option>
                     <option value="DESC">Plus récentes</option>
