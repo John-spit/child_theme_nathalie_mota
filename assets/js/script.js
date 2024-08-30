@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  //Popup
   const contactBtnPhoto = document.getElementById("photoContactBtn");
   const contactBtn = document.getElementById("contactBtn");
   const contactPopup = document.getElementById("contactPopup");
@@ -66,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
     );
   }
 
+  // Miniatures au survol sur les flèches
   const navPrevious = document.querySelector(".nav-previous");
   const navNext = document.querySelector(".nav-next");
 
@@ -167,7 +169,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Charger plus de photos
+  // Charge plus de photos
   const loadMoreBtn = document.getElementById("load-more");
   if (loadMoreBtn) {
     loadMoreBtn.addEventListener("click", function () {
@@ -183,12 +185,13 @@ titles.forEach((title) => {
   title.innerHTML = title.innerHTML.replace(/<br\s*\/?>/gi, " ");
 });
 
+// Menu burger
 document.addEventListener("DOMContentLoaded", function () {
   const openMenu = document.getElementById("openMenu");
   const closeMenu = document.getElementById("closeMenu");
   const navMenu = document.getElementById("navMenu");
 
-  // Cacher l'icône de fermeture au chargement de la page
+  // Cache l'icône de fermeture au chargement de la page
   closeMenu.style.display = "none";
 
   openMenu.addEventListener("click", function () {
@@ -203,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
     openMenu.style.display = "block";
   });
 
-  // Fermer le menu burger lorsque le bouton "Contact" est cliqué
+  // Ferme le menu burger lorsque le bouton "Contact" est cliqué
   contactBtn.addEventListener("click", function () {
     if (window.innerWidth < 790) {
       navMenu.classList.remove("open");
@@ -215,18 +218,18 @@ document.addEventListener("DOMContentLoaded", function () {
   // Écouteur d'événement pour détecter les changements de taille d'écran
   window.addEventListener("resize", function () {
     if (window.innerWidth > 790) {
-      // Masquer les icônes et réinitialiser l'état du menu si la largeur dépasse 790px
+      // Masque les icônes et réinitialise l'état du menu si la largeur dépasse 790px
       openMenu.style.display = "none";
       closeMenu.style.display = "none";
       navMenu.classList.remove("open");
       navMenu.style.display = ""; // Réinitialise le display pour le retour à la navigation normale
     } else {
       if (!navMenu.classList.contains("open")) {
-        // Si le menu n'est pas ouvert, afficher l'icône d'ouverture
+        // Si le menu n'est pas ouvert, affiche l'icône d'ouverture
         openMenu.style.display = "block";
         closeMenu.style.display = "none";
       } else {
-        // Si le menu est ouvert, garder l'icône de fermeture visible
+        // Si le menu est ouvert, garde l'icône de fermeture visible
         openMenu.style.display = "none";
         closeMenu.style.display = "block";
       }

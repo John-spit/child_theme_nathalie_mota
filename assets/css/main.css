@@ -118,10 +118,16 @@ header {
   padding-right: 10px;
 }
 
+.photo-filters-left {
+  display: flex;
+  gap: 30px;
+}
+
 #photo-filters-form select {
   width: 260px;
   border-radius: 8px;
   border: 1.5px solid #b8bbc2;
+  text-transform: uppercase;
 }
 
 .photo-gallery {
@@ -628,7 +634,7 @@ footer {
 }
 
 /* Media queries */
-@media (max-width: 806px) {
+@media (max-width: 860px) {
   #photo-filters-form {
     display: flex;
     flex-direction: column;
@@ -641,8 +647,7 @@ footer {
     flex-direction: column-reverse;
     justify-content: center;
     align-items: center;
-    gap: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 30px;
   }
 
   #photo-filters-form select {
