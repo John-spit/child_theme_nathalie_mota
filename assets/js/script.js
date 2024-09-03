@@ -8,6 +8,10 @@ document.addEventListener("DOMContentLoaded", function () {
   function openPopup() {
     if (contactPopup) {
       contactPopup.style.display = "flex";
+      setTimeout(() => {
+        contactPopup.classList.add("show");
+      }, 10);
+
       console.log("Popup ouverte");
     }
   }
@@ -17,7 +21,10 @@ document.addEventListener("DOMContentLoaded", function () {
       if (contactForm) {
         contactForm.reset();
       }
-      contactPopup.style.display = "none";
+      contactPopup.classList.remove("show");
+      setTimeout(() => {
+        contactPopup.style.display = "none";
+      }, 300);
       console.log("Popup fermée");
     }
   }
@@ -185,35 +192,50 @@ titles.forEach((title) => {
   title.innerHTML = title.innerHTML.replace(/<br\s*\/?>/gi, " ");
 });
 
-// Menu burger
 document.addEventListener("DOMContentLoaded", function () {
   const openMenu = document.getElementById("openMenu");
   const closeMenu = document.getElementById("closeMenu");
   const navMenu = document.getElementById("navMenu");
+  const contactBtn = document.getElementById("contactBtn");
 
-  // Cache l'icône de fermeture au chargement de la page
+  // Cacher l'icône de fermeture et le menu au chargement de la page
   closeMenu.style.display = "none";
+  navMenu.style.display = "none";
 
   openMenu.addEventListener("click", function () {
-    navMenu.classList.add("open");
+    navMenu.style.display = "block"; // Affiche le menu
+    setTimeout(() => {
+      navMenu.classList.add("open");
+    }, 10); // Ajoute une légère pause pour assurer la transition
+
     openMenu.style.display = "none";
     closeMenu.style.display = "block";
   });
 
   closeMenu.addEventListener("click", function () {
     navMenu.classList.remove("open");
+    setTimeout(() => {
+      navMenu.style.display = "none"; // Masque le menu après l'animation
+    }, 500); // Correspond à la durée de l'animation CSS
+
     closeMenu.style.display = "none";
     openMenu.style.display = "block";
   });
 
-  // Ferme le menu burger lorsque le bouton "Contact" est cliqué
-  contactBtn.addEventListener("click", function () {
-    if (window.innerWidth < 790) {
-      navMenu.classList.remove("open");
-      closeMenu.style.display = "none";
-      openMenu.style.display = "block";
-    }
-  });
+  // Fermer le menu burger lorsque le bouton "Contact" est cliqué
+  if (contactBtn) {
+    contactBtn.addEventListener("click", function () {
+      if (window.innerWidth < 790) {
+        navMenu.classList.remove("open");
+        setTimeout(() => {
+          navMenu.style.display = "none"; // Masque le menu après l'animation
+        }, 500); // Correspond à la durée de l'animation CSS
+
+        closeMenu.style.display = "none";
+        openMenu.style.display = "block";
+      }
+    });
+  }
 
   // Écouteur d'événement pour détecter les changements de taille d'écran
   window.addEventListener("resize", function () {

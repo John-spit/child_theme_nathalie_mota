@@ -426,6 +426,14 @@ header {
   justify-content: center;
   align-items: center;
   z-index: 1000;
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.contact-popup.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .popup-wrapper {
@@ -663,24 +671,26 @@ footer {
     padding-right: 8vw;
   }
 
-  .nav {
-    display: none;
-  }
-
   .burger-menu {
     display: block;
   }
 
-  #navMenu.open {
-    display: block;
+  .nav {
     position: absolute;
+    right: -100%;
     top: 100%;
-    left: 0;
     width: 100%;
     background-color: #c2301c;
     padding-top: 50px;
     padding-bottom: 20px;
     z-index: 5000;
+    transition: right 0.5s ease-in-out; /* Transition fluide */
+    display: none;
+  }
+
+  #navMenu.open {
+    display: block; /* Affiche le menu */
+    right: 0;
   }
 
   .menu-icon {
