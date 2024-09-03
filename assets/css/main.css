@@ -730,6 +730,17 @@ footer {
     color: white;
   }
 
+  #contactPopup {
+    transform: translateY(
+      100%
+    ); /* Ajustez la position initiale si nécessaire pour mobiles */
+    transition: opacity 1s ease, transform 1s ease;
+  }
+
+  #contactPopup.show {
+    transform: translateY(0);
+  }
+
   .gallery,
   #new-photos {
     display: flex;

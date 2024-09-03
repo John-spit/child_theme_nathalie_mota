@@ -198,9 +198,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const navMenu = document.getElementById("navMenu");
   const contactBtn = document.getElementById("contactBtn");
 
-  // Cacher l'icône de fermeture et le menu au chargement de la page
+  // Cacher l'icône de fermeture
   closeMenu.style.display = "none";
-  navMenu.style.display = "none";
 
   openMenu.addEventListener("click", function () {
     navMenu.style.display = "block";
