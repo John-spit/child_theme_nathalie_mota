@@ -684,12 +684,12 @@ footer {
     padding-top: 50px;
     padding-bottom: 20px;
     z-index: 5000;
-    transition: right 0.5s ease-in-out; /* Transition fluide */
+    transition: right 0.5s ease-in-out;
     display: none;
   }
 
   #navMenu.open {
-    display: block; /* Affiche le menu */
+    display: block;
     right: 0;
   }
 

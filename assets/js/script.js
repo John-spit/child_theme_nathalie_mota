@@ -203,10 +203,10 @@ document.addEventListener("DOMContentLoaded", function () {
   navMenu.style.display = "none";
 
   openMenu.addEventListener("click", function () {
-    navMenu.style.display = "block"; // Affiche le menu
+    navMenu.style.display = "block";
     setTimeout(() => {
       navMenu.classList.add("open");
-    }, 10); // Ajoute une légère pause pour assurer la transition
+    }, 10);
 
     openMenu.style.display = "none";
     closeMenu.style.display = "block";
@@ -215,8 +215,8 @@ document.addEventListener("DOMContentLoaded", function () {
   closeMenu.addEventListener("click", function () {
     navMenu.classList.remove("open");
     setTimeout(() => {
-      navMenu.style.display = "none"; // Masque le menu après l'animation
-    }, 500); // Correspond à la durée de l'animation CSS
+      navMenu.style.display = "none";
+    }, 500);
 
     closeMenu.style.display = "none";
     openMenu.style.display = "block";
@@ -228,8 +228,8 @@ document.addEventListener("DOMContentLoaded", function () {
       if (window.innerWidth < 790) {
         navMenu.classList.remove("open");
         setTimeout(() => {
-          navMenu.style.display = "none"; // Masque le menu après l'animation
-        }, 500); // Correspond à la durée de l'animation CSS
+          navMenu.style.display = "none";
+        }, 500);
 
         closeMenu.style.display = "none";
         openMenu.style.display = "block";
